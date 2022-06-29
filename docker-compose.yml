@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  google-api:
+    build: ./docker-image
+    image: python
+    container_name: google-api
+    volumes:
+      - ./data/client_secrets.json:/client_secrets.json
+      - ./job-links/:/job-links
+      - ./scripts/etl-script.py:/bin/etl-script.py
+      - ./scripts/get-job-links.sh:/bin/get-job-links.sh

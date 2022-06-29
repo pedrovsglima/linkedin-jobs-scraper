@@ -1,0 +1,2 @@
+*	*	*	*	*	python /bin/etl-script.py
+*/2	*	*	*	*	sh /bin/get-job-links.sh
