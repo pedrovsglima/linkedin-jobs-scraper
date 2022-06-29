@@ -4,7 +4,7 @@ JOB_LINK="https\:\/\/www.linkedin.com\/jobs\/view\/"
 
 JOB_TITLE="data%20engineer"
 LOCATION="brazil"
-URL="https://www.linkedin.com/jobs/search?keywords=${JOB_TITLE}&location=${LOCATION}&geoId=&trk=public_jobs_jobs-search-bar_search-submit&pageNum=0"
+URL="https://www.linkedin.com/jobs/search?keywords=${JOB_TITLE}&location=${LOCATION}"
 
 dateAndTime=$(date -u +'%F %H-%M-%S %Z')
 OUTPUT_FILE="../job-links/$dateAndTime.txt"
