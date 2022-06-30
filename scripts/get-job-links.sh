@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 JOB_LINK="https\:\/\/www.linkedin.com\/jobs\/view\/"
 

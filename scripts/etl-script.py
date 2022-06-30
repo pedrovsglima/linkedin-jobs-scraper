@@ -118,7 +118,7 @@ class Spreadsheet():
 
 def main():
 
-    CREDENTIALS_FILE = "../data/client_secrets.json"
+    CREDENTIALS_FILE = "../client_secrets.json"
     SPREADSHEET_KEY = "1KSsI8nJFyp_vYyaKFBZFJ-w-wZqou85dAdIj9E6a3zI"
     JOB_LINKS_PATH = "../job-links/"
     SAVED_JOB_LINKS_PATH = JOB_LINKS_PATH + "sent/"
