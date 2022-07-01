@@ -1,0 +1,63 @@
+<h1 id="linkedin-jobs-scraper">LinkedIn Jobs Scraper</h1>
+<p><strong>Autor:</strong> Pedro Vitor Soares Gomes de Lima</p>
+<p>Requisitos para rodar a aplicação: arquivo com credenciais para acessar o Google Sheets e ter o Docker instalado.</p>
+<p><a href="https://github.com/peuvitor/linkedin-jobs-scraper">acesso aos arquivos</a></p>
+
+<h2 id="overview">Overview</h2>
+<p>Periodicamente extrair do LinkedIn as vagas abertas de <strong>Data Engineer</strong> no <strong>Brasil</strong> e salvar os detalhes de cada uma delas em uma planilha do Google Sheets.</p>
+<ol>
+<li><p>O script em shell extrai periodicamente as vagas abertas e salva em uma pasta compartilhada um arquivo .txt com o link de cada uma delas;</p>
+</li>
+<li><p>O script em python:</p>
+<ul>
+<li><p>periodicamente (não sincronizado com o script em shell) verifica os arquivos presentes na pasta compartilhada;</p>
+</li>
+<li><p>para cada arquivo encontrado, varre todos os links existentes;</p>
+</li>
+<li><p>em cada link de vaga de emprego extrai-se: o título da vaga, a empresa que está ofertando, o local de trabalho e a descrição;</p>
+</li>
+<li><p>todas essas informações são salvas em uma planilha do Google Sheets, onde cada aba corresponde a um arquivo;</p>
+</li>
+<li><p>após finalizar a carga na planilha, o arquivo com os links das vagas é movido para uma subpasta da pasta compartilhada, de modo a manter o registro de todas as extrações realizadas e salvas.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>Resumo do funcionamento:</p>
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/overview.png?raw=true" class="center"></p>
+
+<h2 id="mais-detalhes">Mais detalhes</h2>
+<h3 id="automa-o-da-aplica-o">Automação da aplicação</h3>
+<ul>
+<li><p>a aplicação é executada com um cron job e, para efeito de demonstração, foram escolhidos intervalos de 2 e 11 minutos para os scripts em shell e em python, respectivamente;</p>
+</li>
+<li><p>existência de uma aba de consolidação, que guarda um resumo dos dados de todas as outras abas existentes.</p>
+</li>
+</ul>
+<h3 id="estrutura-dos-arquivos-do-reposit-rio">Estrutura dos arquivos do repositório</h3>
+<ul>
+<li><p>arquivo &quot;docker-compose.yml&quot;: para funcionamento da aplicação, basta subir o container presente neste arquivo. Nele constam a criação da imagem e o mapeamento dos volumes;</p>
+</li>
+<li><p>pasta &quot;data&quot;: armazena o arquivo JSON com as credenciais que autorizam o acesso à planilha;</p>
+</li>
+<li><p>pasta &quot;docker-image&quot;: armazena o arquivo do Dockerfile para criação da imagem e o arquivo crontab que agenda a execução dos scripts;</p>
+</li>
+<li><p>pasta &quot;scripts&quot;: armazena os scripts em shell e em python;</p>
+</li>
+<li><p>pasta &quot;job-links&quot;: armazena os arquivos resultantes das coletas de dados do LinkedIn.</p>
+</li>
+</ul>
+<h3 id="planilha-final">Planilha final</h3>
+<p>Abaixo é a captura da tela assim que a planilha é aberta.</p>
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-geral-1.PNG?raw=true" width="1440" height="1080" class="center"></p>
+
+<p>Agora, um exemplo do conteúdo presente nas abas referentes a cada arquivo da pasta compartilhada. É interessante pontuar que o resultado obtido ao realizar a coleta de dados na pesquisa de vagas no LinkedIn conta sempre com 25 vagas de emprego. Quando você está conectado a uma conta do LinkedIn, o conteúdo é apresentado em diversas páginas de 25 vagas, o que permitiria a iteração via código ao mudar um parâmetro presente no URL da pesquisa do LinkedIn. </p>
+<p>Porém, da forma que está sendo feita a aplicação, não é realizado nenhum login antes da coleta de dados. Por conta disso, a página do LinkedIn é mostrada de maneira diferente, não por páginas contendo 25 vagas de emprego, mas sim com uma rolagem (scroll) infinita que apresenta mais 25 novas vagas assim que carregada. Dessa forma, para conseguir extrair mais de 25 vagas por vez, se faz necessário o acréscimo de um algoritmo que interaja com a página, o que, considerando o objetivo deste projeto, não foi realizado aqui.</p>
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-exemplo-2.PNG?raw=true" width="1440" height="1080" class="center"></p>
+
+<p>Por fim, é possível observar todas as abas existentes na planilha. É interessante observar a questão da periodicidade de execução dos scripts em shell e em python e também checar como os arquivos estão organizados na pasta &quot;job-links/&quot;.</p>
+<p>Como o script em shell (extrair links das vagas) executa diversas vezes antes do script em python (extrair informações de cada link e salvar na planilha). Por isso, as abas presentes na planilha correspondem aos arquivos presentes na pasta &quot;job-links/sent/&quot;. Ainda há outros arquivos na pasta &quot;job-links/&quot;, mas a aplicação foi parada antes do script em python executar novamente.</p>
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-abas-3.png?raw=true" width="1440" height="1080" class="center"></p>
+
+<h3 id="filtragem-do-conte-do-html">Filtragem do conteúdo HTML</h3>
+<p>TODO</p>
