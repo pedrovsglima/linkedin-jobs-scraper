@@ -52,20 +52,34 @@ Resumo do funcionamento:
 
 Abaixo é a captura da tela assim que a planilha é aberta.
 
-<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-geral-1.PNG?raw=true" width="1440" height="1080" class="center"></p>
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-geral-1.PNG?raw=true" width="1080" height="523" class="center"></p>
 
 Agora, um exemplo do conteúdo presente nas abas referentes a cada arquivo da pasta compartilhada. É interessante pontuar que o resultado obtido ao realizar a coleta de dados na pesquisa de vagas no LinkedIn conta sempre com 25 vagas de emprego. Quando você está conectado a uma conta do LinkedIn, o conteúdo é apresentado em diversas páginas de 25 vagas, o que permitiria a iteração via código ao mudar um parâmetro presente no URL da pesquisa do LinkedIn. 
 
 Porém, da forma que está sendo feita a aplicação, não é realizado nenhum login antes da coleta de dados. Por conta disso, a página do LinkedIn é mostrada de maneira diferente, não por páginas contendo 25 vagas de emprego, mas sim com uma rolagem (scroll) infinita que apresenta mais 25 novas vagas assim que carregada. Dessa forma, para conseguir extrair mais de 25 vagas por vez, se faz necessário o acréscimo de um algoritmo que interaja com a página, o que, considerando o objetivo deste projeto, não foi realizado aqui.
 
-<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-exemplo-2.PNG?raw=true" width="1440" height="1080" class="center"></p>
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-exemplo-2.PNG?raw=true" width="1080" height="523" class="center"></p>
 
 Por fim, é possível observar todas as abas existentes na planilha. É interessante observar a questão da periodicidade de execução dos scripts em shell e em python e também checar como os arquivos estão organizados na pasta "job-links/".
 
-Como o script em shell (extrair links das vagas) executa diversas vezes antes do script em python (extrair informações de cada link e salvar na planilha). Por isso, as abas presentes na planilha correspondem aos arquivos presentes na pasta "job-links/sent/". Ainda há outros arquivos na pasta "job-links/", mas a aplicação foi parada antes do script em python executar novamente.
+O script em shell (extrair links das vagas) executa diversas vezes antes do script em python (extrair informações de cada link e salvar na planilha), por isso, as abas presentes na planilha correspondem aos arquivos presentes na pasta "job-links/sent/". Ainda há outros arquivos na pasta "job-links/", mas a aplicação foi parada antes do script em python executar novamente.
 
-<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-abas-3.png?raw=true" width="1440" height="1080" class="center"></p>
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/planilha-abas-3.png?raw=true" width="1080" height="523" class="center"></p>
 
 ### Filtragem do conteúdo HTML
 
-TODO
+1. Página de vagas de emprego do LinkedIn de acordo com os filtros de título e local de trabalho;
+
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/linkedin-all-jobs-1.jpg?raw=true" width="1080" height="523" class="center"></p>
+
+2. No resultado da coleta de dados da página que lista todas as vagas abertas, é possível observar que cada uma das 25 vagas são identificadas por um ID, acessível em "data-entity-urn";
+
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/html-all-jobs-2.jpg?raw=true" width="1080" height="523" class="center"></p>
+
+3. Após extrair os IDs das vagas mostradas no momento do acesso, é possível acessar cada uma delas a partir do URL apresentado na imagem. Por conta disso, o arquivo de texto criado conta com o URL completo para cada uma das 25 vagas, onde será possível extrair: o título da vaga, a empresa que está ofertando, o local de trabalho e a descrição;
+
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/linkedin-job-3.jpg?raw=true" width="1080" height="523" class="center"></p>
+
+4. Investigando o resultado da coleta de dados da página específica de uma vaga de emprego, são observadas as seguintes relações com o que se deseja extrair. Com isso, é implementado a extração dessas classes, que depois são armazenadas e enviadas para a planilha do Google Sheets.
+
+<p><img src="https://github.com/peuvitor/linkedin-jobs-scraper/blob/main/images/html-job-4.jpg?raw=true" width="1080" height="523" class="center"></p>
